@@ -2,6 +2,7 @@
 const User = require("../models/User.js");
 const { validationResult } = require("express-validator");
 const logger = require("../utils/logger.js");
+import { uploadFile } from "../../Utils/cloudinary.js";
 
 const getUsers = async (req, res) => {
   try {
@@ -45,6 +46,11 @@ const updateUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
+    }
+    const image = req.files && req.files.image ? req.files.image[0] : null;
+    if (image) {
+      let url = await uploadFile(image.path);
+      req.body.profilePicture = url;
     }
 
     const { id } = req.params;
