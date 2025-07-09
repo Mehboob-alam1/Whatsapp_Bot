@@ -17,6 +17,9 @@ const fileRoutes = require("./routes/files.js");
 const blockerRoutes = require("./routes/blockers.js");
 const dependencyRoutes = require("./routes/dependencies.js");
 const uploadRoutes = require("./routes/upload.js");
+const projectRoutes = require("./routes/projectRoutes.js");
+const teamRoutes = require("./routes/teamRoutes.js");
+const invitationRoutes = require("./routes/invitationRoutes.js");
 
 const errorHandler = require("./middlewares/errorHandler.js");
 const logger = require("./utils/logger.js");
@@ -54,6 +57,9 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.status(200).send("ok");
+});
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
@@ -63,7 +69,10 @@ app.use("/api/files", fileRoutes);
 app.use("/api/blockers", blockerRoutes);
 app.use("/api/dependencies", dependencyRoutes);
 app.use("/api/upload", uploadRoutes);
-
+app.use("/api/projects", projectRoutes);
+app.use("/api/teams", teamRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/invitations", invitationRoutes);
 // Health check
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
