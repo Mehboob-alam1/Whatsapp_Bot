@@ -4,6 +4,9 @@ const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
+    profilePicture: {
+      type: String,
+    },
     name: {
       type: String,
       required: true,
